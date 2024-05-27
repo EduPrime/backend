@@ -26,6 +26,8 @@ services:
       - '3000:3000'
     depends_on:
       - database
+    volumes:
+      - ./public.pem:/etc/postgrest/public.pem
     restart: always
   redis:
     image: docker.io/library/redis:7.2.5
