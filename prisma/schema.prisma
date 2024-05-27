@@ -1,0 +1,223 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Institution {
+  id         String   @id @default(uuid()) @db.Uuid
+  name       String
+  address    String?
+  city       String?
+  state      String?
+  postalCode String?
+  phone      String?
+  schools    School[]
+}
+
+model School {
+  id                                      String            @id @default(uuid()) @db.Uuid
+  name                                    String
+  address                                 String?
+  city                                    String?
+  state                                   String?
+  postalCode                              String?
+  phone                                   String?
+  institutionId                           String            @db.Uuid
+  institution                             Institution       @relation(fields: [institutionId], references: [id], onDelete: Restrict)
+  courses                                 Course[]
+  timetables                              TimetableSchool[]
+  teachers                                Teacher[]
+  createdAt                               DateTime          @default(now())
+  deletedAt                               DateTime?
+  active                                  Boolean           @default(true)
+  abbreviation                            String?
+  longitude                               String?
+  latitude                                String?
+  totalArea                               String?
+  builtArea                               String?
+  availableArea                           String?
+  acronym                                 String?
+  blockDiaryEntriesForClosedAcademicYears Boolean?
+  operationalStatus                       Int?
+  administrativeDependency                Int?
+  regulation                              Int?
+  logoUrl                                 String?
+  access                                  Int?
+  managerId                               String?           @db.Uuid
+  managerPosition                         String?
+  operationLocation                       String?
+  condition                               Int?
+  sharedSchoolInepCode                    Int?
+  creationDecree                          String?
+  numberOfFloors                          Int?
+  floorType                               Int?
+  energyMeter                             Int?
+  waterConsumed                           Int?
+  hasPrincipalOffice                      Boolean?
+  hasTeachersRoom                         Boolean?
+  hasSecretaryOffice                      Boolean?
+  hasComputerLab                          Boolean?
+  hasScienceLab                           Boolean?
+  hasAEERoom                              Boolean?
+  hasCoveredCourt                         Boolean?
+  hasUncoveredCourt                       Boolean?
+  hasKitchen                              Boolean?
+  hasLibrary                              Boolean?
+  hasReadingRoom                          Boolean?
+  hasPlayground                           Boolean?
+  hasNursery                              Boolean?
+  hasRestroomOutside                      Boolean?
+  hasRestroomInside                       Boolean?
+  hasChildRestroom                        Boolean?
+  hasAccessibleRestroom                   Boolean?
+  hasShower                               Boolean?
+  hasCafeteria                            Boolean?
+  hasPantry                               Boolean?
+  hasAuditorium                           Boolean?
+  hasPatio                                Boolean?
+  hasGreenArea                            Boolean?
+  hasPERoom                               Boolean?
+  hasArtsRoom                             Boolean?
+  hasStudentDormitory                     Boolean?
+  hasTeacherDormitory                     Boolean?
+  hasExternalArea                         Boolean?
+  hasMultipurposeRoom                     Boolean?
+}
+
+model Course {
+  id       String   @id @default(uuid()) @db.Uuid
+  name     String
+  schoolId String   @db.Uuid
+  school   School   @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  series   Series[]
+}
+
+model Series {
+  id          String      @id @default(uuid()) @db.Uuid
+  name        String
+  courseId    String      @db.Uuid
+  course      Course      @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  classrooms  Classroom[]
+  timetable   Timetable?  @relation(fields: [timetableId], references: [id])
+  timetableId String?     @db.Uuid
+}
+
+model Classroom {
+  id         String      @id @default(uuid()) @db.Uuid
+  name       String
+  period     Period      @default(MORNING)
+  seriesId   String      @db.Uuid
+  series     Series      @relation(fields: [seriesId], references: [id], onDelete: Restrict)
+  students   Student[]
+  timetables Timetable[]
+}
+
+model Student {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String
+  email       String?
+  phone       String?
+  classroomId String       @db.Uuid
+  classroom   Classroom    @relation(fields: [classroomId], references: [id], onDelete: Restrict)
+  attendances Attendance[]
+  grades      Grade[]
+}
+
+model Teacher {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String
+  email       String?
+  phone       String?
+  schoolId    String       @db.Uuid
+  school      School       @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  disciplines Discipline[]
+  timetables  Timetable[]
+}
+
+model Discipline {
+  id           String         @id @default(uuid()) @db.Uuid
+  name         String
+  teacherId    String         @db.Uuid
+  teacher      Teacher        @relation(fields: [teacherId], references: [id], onDelete: Restrict)
+  timetables   Timetable[]
+  ClassSession ClassSession[]
+  Grade        Grade[]
+}
+
+model Timetable {
+  id            String            @id @default(uuid()) @db.Uuid
+  name          String
+  classroomId   String            @db.Uuid
+  classroom     Classroom         @relation(fields: [classroomId], references: [id], onDelete: Restrict)
+  teachers      Teacher[]
+  series        Series[]
+  schools       TimetableSchool[]
+  classSessions ClassSession[]
+  Discipline    Discipline?       @relation(fields: [disciplineId], references: [id])
+  disciplineId  String?           @db.Uuid
+}
+
+model ClassSession {
+  id           String     @id @default(uuid()) @db.Uuid
+  dayOfWeek    DayOfWeek
+  startTime    String
+  endTime      String
+  disciplineId String     @db.Uuid
+  discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  timetableId  String     @db.Uuid
+  timetable    Timetable  @relation(fields: [timetableId], references: [id], onDelete: Restrict)
+}
+
+model Attendance {
+  id        String           @id @default(uuid()) @db.Uuid
+  date      DateTime
+  studentId String           @db.Uuid
+  student   Student          @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  status    AttendanceStatus
+}
+
+model Grade {
+  id           String     @id @default(uuid()) @db.Uuid
+  value        Float
+  date         DateTime
+  studentId    String     @db.Uuid
+  student      Student    @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  disciplineId String     @db.Uuid
+  discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+}
+
+model TimetableSchool {
+  timetableId String    @db.Uuid
+  schoolId    String    @db.Uuid
+  timetable   Timetable @relation(fields: [timetableId], references: [id], onDelete: Restrict)
+  school      School    @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+
+  @@id([timetableId, schoolId])
+}
+
+enum Period {
+  MORNING
+  AFTERNOON
+  EVENING
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  EXCUSED
+}
