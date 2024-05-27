@@ -13,13 +13,15 @@ Este projeto é uma aplicação web para gerenciar informações educacionais, i
 ### Configuração Inicial
 
 1. **Clone o repositório**:
-   \`\`\`sh
+
+   ```sh
    git clone <URL do repositório>
    cd <nome do repositório>
-   \`\`\`
+   ```
 
 2. **Crie o arquivo \`.env\`** com as seguintes variáveis de ambiente:
-   \`\`\`env
+
+   ```env
 
    # Banco de Dados
 
@@ -47,17 +49,18 @@ Este projeto é uma aplicação web para gerenciar informações educacionais, i
    AUTHENTIK_HOST=authentik.local
    AUTHENTIK_SECRET_KEY=GsnagbvXIULQ8JRTA1XihLJiEna/PjHhYWXFxUW1DcC2uHbcabLGZ+DebcLnr9s2
    AUTHENTIK_ERROR_REPORTING\_\_ENABLED=true
-   \`\`\`
+   ```
 
 3. **Inicie os serviços** usando Docker Compose:
-   \`\`\`sh
+
+   ```sh
    docker-compose up -d
-   \`\`\`
+   ```
 
 4. **Configure o Authentik** acessando a URL:
-   \`\`\`
+   ```
    http://<seu IP ou hostname>:9000/if/flow/initial-setup/
-   \`\`\`
+   ```
    Siga as instruções para criar um usuário administrador e configurar o Authentik.
 
 ### Estrutura do Projeto
@@ -72,12 +75,12 @@ Este projeto é uma aplicação web para gerenciar informações educacionais, i
 
 A API exposta pelo PostgREST permite operações CRUD nas tabelas do banco de dados. Exemplos de endpoints incluem:
 
-- \`GET /schools\`: Retorna a lista de escolas.
-- \`POST /schools\`: Adiciona uma nova escola.
-- \`GET /teachers\`: Retorna a lista de professores.
-- \`POST /teachers\`: Adiciona um novo professor.
-- \`GET /students\`: Retorna a lista de alunos.
-- \`POST /students\`: Adiciona um novo aluno.
+- `GET /schools`: Retorna a lista de escolas.
+- `POST /schools`: Adiciona uma nova escola.
+- `GET /teachers`: Retorna a lista de professores.
+- `POST /teachers`: Adiciona um novo professor.
+- `GET /students`: Retorna a lista de alunos.
+- `POST /students`: Adiciona um novo aluno.
 
 ### Autenticação
 
@@ -86,17 +89,17 @@ A autenticação é gerenciada pelo Authentik, que fornece endpoints para login,
 ### Comandos Úteis
 
 - **Iniciar a aplicação**:
-  \`\`\`sh
+  ```sh
   docker-compose up -d
-  \`\`\`
+  ```
 - **Parar a aplicação**:
-  \`\`\`sh
+  ```sh
   docker-compose down
-  \`\`\`
+  ```
 - **Verificar logs**:
-  \`\`\`sh
+  ```sh
   docker-compose logs -f
-  \`\`\`
+  ```
 
 ### Contribuição
 
@@ -104,17 +107,17 @@ Para contribuir com o projeto, siga os passos abaixo:
 
 1. Fork o repositório.
 2. Crie uma branch para sua feature ou correção de bug.
-   \`\`\`sh
+   ```sh
    git checkout -b minha-feature
-   \`\`\`
+   ```
 3. Commit suas mudanças.
-   \`\`\`sh
+   ```sh
    git commit -m 'Minha nova feature'
-   \`\`\`
+   ```
 4. Push para a branch criada.
-   \`\`\`sh
+   ```sh
    git push origin minha-feature
-   \`\`\`
+   ```
 5. Abra um Pull Request no GitHub.
 
 ---
