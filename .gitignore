@@ -59,3 +59,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 media/
 certs/
 public.pem
+pubkey.der
+pubkeyinfo.cnf
