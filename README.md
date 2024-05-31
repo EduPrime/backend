@@ -2,6 +2,12 @@
 
 Este projeto é uma aplicação web para gerenciar informações educacionais, integrando várias tecnologias para criar uma solução robusta e escalável. A stack utilizada inclui PostgreSQL com TimescaleDB, Prisma, PostgREST, Redis, e Authentik para autenticação.
 
+## Diagrama ERD
+
+Abaixo está o diagrama ERD gerado para o banco de dados:
+
+![EduPrime ERD](./prisma/ERD.svg)
+
 ### Stack Tecnológica
 
 - **TimescaleDB**: Uma extensão do PostgreSQL otimizada para séries temporais, usada como banco de dados principal.
