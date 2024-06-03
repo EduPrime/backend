@@ -11,7 +11,7 @@
 		"docker:stop": "cd Docker && docker-compose --env-file ../.env down",
 		"seed": "ts-node prisma/seeds/seed.ts",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-		"token": "ts-node-dev certs/src/index.ts"
+		"token": "ts-node-dev token/src/index.ts"
 	},
 	"dependencies": {
 		"@prisma/client": "^5.14.0",
