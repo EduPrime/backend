@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { seedInstitution } from './seedInstitution'
 import { seedGrade } from './seedGrade'
+import { createInstitutionUserAndRole } from './createInstitutionUserAndRole'
 
 const prisma = new PrismaClient()
 
@@ -12,6 +13,10 @@ async function main() {
     if (institutionCount > 0) {
       console.log('Data already exists in the database. Skipping seeding.')
     } else {
+      console.log('Creating DB users and roles...')
+      await createInstitutionUserAndRole()
+      console.log('DB users and roles created successfully.')
+
       console.log('Seeding Institution...')
       await seedInstitution()
       console.log('Institution seeded successfully.')

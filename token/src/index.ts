@@ -22,9 +22,10 @@ app.get('/generate-token', (req, res) => {
     aud: 'https://zitadel.cloud',
     exp: Math.floor(Date.now() / 1000) + 3600, // Expires in 1 hour
     iat: Math.floor(Date.now() / 1000), // Current timestamp
+    api: 'https://teste.algumaapi.com.br',
     iss: 'clientId',
     sub: 'clientId',
-    role: 'admin',
+    role: 'institution',
   }
 
   // Sign the JWT with the secret and create the token
