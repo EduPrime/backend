@@ -12,7 +12,8 @@ async function main() {
 
     if (institutionCount > 0) {
       console.log('Data already exists in the database. Skipping seeding.')
-    } else {
+    }
+    else {
       console.log('Creating DB users and roles...')
       await createInstitutionUserAndRole()
       console.log('DB users and roles created successfully.')
@@ -25,10 +26,12 @@ async function main() {
       await seedGrade()
       console.log('Grade seeded successfully.')
     }
-  } catch (e) {
+  }
+  catch (e) {
     console.error('Error during seeding:', e)
     process.exit(1)
-  } finally {
+  }
+  finally {
     await prisma.$disconnect()
   }
 }

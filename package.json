@@ -1,44 +1,46 @@
 {
-	"name": "eduprime.backend",
-	"version": "0.0.1",
-	"description": "api for eduprime backend",
-	"author": "@hermesalvesbr",
-	"private": true,
-	"license": "MIT",
-	"scripts": {
-		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-		"docker:start": "cd Docker && docker-compose --env-file ../.env up -d",
-		"docker:stop": "cd Docker && docker-compose --env-file ../.env down",
-		"seed": "ts-node prisma/seeds/seed.ts",
-		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-		"token": "ts-node-dev token/src/index.ts"
-	},
-	"dependencies": {
-		"@prisma/client": "^5.14.0",
-		"@types/body-parser": "^1.19.5",
-		"@types/express": "^4.17.21",
-		"@types/jsonwebtoken": "^9.0.6",
-		"body-parser": "^1.20.2",
-		"dotenv": "^16.4.5",
-		"express": "^4.19.2",
-		"jsonwebtoken": "^9.0.2"
-	},
-	"devDependencies": {
-		"@types/node": "^20.12.12",
-		"@typescript-eslint/eslint-plugin": "^7.10.0",
-		"@typescript-eslint/parser": "^7.10.0",
-		"eslint": "^9.3.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-prettier": "^5.1.3",
-		"prettier": "^3.2.5",
-		"prisma": "^5.14.0",
-		"prisma-grapher": "^0.2.1",
-		"ts-node": "^10.9.2",
-		"ts-node-dev": "^2.0.0",
-		"typescript": "^5.4.5"
-	},
-	"engines": {
-		"node": "22.x",
-		"pnpm": ">=9"
-	}
+  "name": "eduprime.backend",
+  "type": "module",
+  "version": "0.0.2",
+  "private": true,
+  "description": "API for eduprime backend",
+  "author": "@hermesalvesbr",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.x"
+  },
+  "scripts": {
+    "dev": "pnpm run docker:start",
+    "build": "tsc",
+    "docker:start": "docker-compose --env-file .env up -d",
+    "docker:stop": "docker-compose --env-file .env down",
+    "seed": "ts-node prisma/seeds/seed.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint:fix": "eslint --config ./eslint.config.js . --fix",
+    "type-check": "vue-tsc --noEmit",
+    "token": "ts-node-dev token/src/index.ts"
+  },
+  "dependencies": {
+	  "@prisma/client": "^5.14.0",
+	  "@types/body-parser": "^1.19.5",
+	  "@types/express": "^4.17.21",
+	  "@types/jsonwebtoken": "^9.0.6",
+	  "body-parser": "^1.20.2",
+	  "dotenv": "^16.4.5",
+	  "express": "^4.19.2",
+	  "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+	  "@antfu/eslint-config": "^2.24.1",
+	  "@types/node": "^20.12.12",
+	  "@vue/eslint-config-typescript": "^13.0.0",
+	  "eslint": "^9.8.0",
+	  "eslint-plugin-vue": "^9.27.0",
+	  "prisma": "^5.14.0",
+	  "prisma-grapher": "^0.2.1",
+	  "ts-node": "^10.9.2",
+	  "ts-node-dev": "^2.0.0",
+	  "typescript": "^5.4.5",
+	  "vue-tsc": "^2.0.29"
+  }
 }

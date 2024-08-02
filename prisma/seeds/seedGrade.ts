@@ -1,4 +1,5 @@
-import { PrismaClient, AttendanceStatus, DayOfWeek } from '@prisma/client'
+import { AttendanceStatus, PrismaClient } from '@prisma/client'
+
 const prisma = new PrismaClient()
 
 export async function seedGrade() {
@@ -9,10 +10,10 @@ export async function seedGrade() {
   const schools = await prisma.school.findMany()
 
   if (
-    students.length === 0 ||
-    disciplines.length === 0 ||
-    timetables.length === 0 ||
-    schools.length === 0
+    students.length === 0
+    || disciplines.length === 0
+    || timetables.length === 0
+    || schools.length === 0
   ) {
     console.error(
       'Required data is missing, please ensure the previous seed has run correctly.',
@@ -21,7 +22,7 @@ export async function seedGrade() {
   }
 
   // Create Attendance records
-  const attendanceData = students.map((student) => ({
+  const attendanceData = students.map(student => ({
     date: new Date(),
     studentId: student.id,
     status: AttendanceStatus.PRESENT,
@@ -32,7 +33,7 @@ export async function seedGrade() {
   })
 
   // Create Grade records
-  const gradeData = students.map((student) => ({
+  const gradeData = students.map(student => ({
     value: Math.floor(Math.random() * 100),
     date: new Date(),
     studentId: student.id,
@@ -45,8 +46,8 @@ export async function seedGrade() {
   })
 
   // Create TimetableSchool records
-  const timetableSchoolData = timetables.flatMap((timetable) =>
-    schools.map((school) => ({
+  const timetableSchoolData = timetables.flatMap(timetable =>
+    schools.map(school => ({
       timetableId: timetable.id,
       schoolId: school.id,
     })),

@@ -1,8 +1,8 @@
+import * as path from 'node:path'
 import * as express from 'express'
 import * as jwt from 'jsonwebtoken'
 import * as bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
-import * as path from 'path'
 
 // Carregar variáveis de ambiente do arquivo .env
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
@@ -47,7 +47,8 @@ app.post('/validate-token', (req, res) => {
     const decodedPayload = jwt.verify(jwtToken, secret)
 
     res.json({ valid: true, payload: decodedPayload })
-  } catch (error) {
+  }
+  catch (error) {
     res.status(401).json({ valid: false, error: 'Invalid token' })
   }
 })
