@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { PrismaClient } from '@prisma/client'
 import { seedInstitution } from './seedInstitution'
 import { seedGrade } from './seedGrade'
