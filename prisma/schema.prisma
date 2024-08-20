@@ -26,6 +26,7 @@ datasource db {
 model Institution {
   id         String   @id @default(uuid()) @db.Uuid
   name       String
+  email      String?
   address    String?
   city       String?
   state      String?
