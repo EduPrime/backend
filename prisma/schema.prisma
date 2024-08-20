@@ -24,7 +24,7 @@ datasource db {
 }
 
 model Institution {
-  id         String   @id @default(uuid()) @db.Uuid
+  id         String    @id @default(uuid()) @db.Uuid
   name       String
   email      String?
   address    String?
@@ -33,6 +33,11 @@ model Institution {
   postalCode String?
   phone      String?
   schools    School[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  deletedAt  DateTime?
+
+  singleton Int @unique @default(1) // Ensures only one institution
 }
 
 model School {
@@ -48,8 +53,6 @@ model School {
   courses                                 Course[]
   timetables                              TimetableSchool[]
   teachers                                Teacher[]
-  createdAt                               DateTime          @default(now())
-  deletedAt                               DateTime?
   active                                  Boolean           @default(true)
   abbreviation                            String?
   longitude                               String?
@@ -103,14 +106,20 @@ model School {
   hasTeacherDormitory                     Boolean?
   hasExternalArea                         Boolean?
   hasMultipurposeRoom                     Boolean?
+  createdAt                               DateTime          @default(now())
+  updatedAt                               DateTime?         @updatedAt
+  deletedAt                               DateTime?
 }
 
 model Course {
-  id       String   @id @default(uuid()) @db.Uuid
-  name     String
-  schoolId String   @db.Uuid
-  school   School   @relation(fields: [schoolId], references: [id], onDelete: Restrict)
-  series   Series[]
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  schoolId  String    @db.Uuid
+  school    School    @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  series    Series[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 }
 
 model Series {
@@ -121,6 +130,9 @@ model Series {
   classrooms  Classroom[]
   timetable   Timetable?  @relation(fields: [timetableId], references: [id])
   timetableId String?     @db.Uuid
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime?   @updatedAt
+  deletedAt   DateTime?
 }
 
 model Classroom {
@@ -131,6 +143,9 @@ model Classroom {
   series     Series      @relation(fields: [seriesId], references: [id], onDelete: Restrict)
   students   Student[]
   timetables Timetable[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  deletedAt  DateTime?
 }
 
 model Student {
@@ -142,6 +157,9 @@ model Student {
   classroom   Classroom    @relation(fields: [classroomId], references: [id], onDelete: Restrict)
   attendances Attendance[]
   grades      Grade[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+  deletedAt   DateTime?
 }
 
 model Teacher {
@@ -153,6 +171,9 @@ model Teacher {
   school      School       @relation(fields: [schoolId], references: [id], onDelete: Restrict)
   disciplines Discipline[]
   timetables  Timetable[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+  deletedAt   DateTime?
 }
 
 model Discipline {
@@ -163,6 +184,9 @@ model Discipline {
   timetables   Timetable[]
   ClassSession ClassSession[]
   Grade        Grade[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime?      @updatedAt
+  deletedAt    DateTime?
 }
 
 model Timetable {
@@ -176,6 +200,9 @@ model Timetable {
   classSessions ClassSession[]
   Discipline    Discipline?       @relation(fields: [disciplineId], references: [id])
   disciplineId  String?           @db.Uuid
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime?         @updatedAt
+  deletedAt     DateTime?
 }
 
 model ClassSession {
@@ -187,6 +214,9 @@ model ClassSession {
   discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
   timetableId  String     @db.Uuid
   timetable    Timetable  @relation(fields: [timetableId], references: [id], onDelete: Restrict)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?  @updatedAt
+  deletedAt    DateTime?
 }
 
 model Attendance {
@@ -195,6 +225,9 @@ model Attendance {
   studentId String           @db.Uuid
   student   Student          @relation(fields: [studentId], references: [id], onDelete: Restrict)
   status    AttendanceStatus
+  createdAt DateTime         @default(now())
+  updatedAt DateTime?        @updatedAt
+  deletedAt DateTime?
 }
 
 model Grade {
@@ -205,6 +238,9 @@ model Grade {
   student      Student    @relation(fields: [studentId], references: [id], onDelete: Restrict)
   disciplineId String     @db.Uuid
   discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?  @updatedAt
+  deletedAt    DateTime?
 }
 
 model TimetableSchool {
@@ -212,6 +248,9 @@ model TimetableSchool {
   schoolId    String    @db.Uuid
   timetable   Timetable @relation(fields: [timetableId], references: [id], onDelete: Restrict)
   school      School    @relation(fields: [schoolId], references: [id], onDelete: Restrict)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  deletedAt   DateTime?
 
   @@id([timetableId, schoolId])
 }
