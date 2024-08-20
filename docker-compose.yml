@@ -9,7 +9,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - database_datax:/var/lib/postgresql/data
+      - database_datap:/var/lib/postgresql/data
     restart: always
 
   api:
@@ -29,5 +29,5 @@ services:
     restart: always
 
 volumes:
-  database_datax:
+  database_datap:
     driver: local

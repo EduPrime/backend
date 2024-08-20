@@ -12,6 +12,7 @@ export async function seedInstitution() {
     institution = await prisma.institution.create({
       data: {
         name: 'Instituição Educacional Alfa',
+        email: 'alpha@eduprime.chat',
         address: 'Rua Principal, 123',
         city: 'Cidade Alfa',
         state: 'Estado Alfa',
